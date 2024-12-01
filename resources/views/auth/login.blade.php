@@ -65,6 +65,9 @@
                             </div>
                         </div>
                     </form>
+                    <div class="col-md-8 offset-md-4 mt-3">
+                        <a href="{{ route('auth.google') }}" class="btn btn-danger">Login With Google</a>
+                    </div>
                 </div>
             </div>
         </div>
