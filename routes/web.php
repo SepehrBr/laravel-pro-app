@@ -13,3 +13,8 @@ Route::get('/auth/google', [GoogleAuthController::class, 'redirect'])->name('aut
 Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// password confirm
+Route::get('secret', function () {
+    return 'secret';
+})->middleware(['auth', 'password.confirm']);
