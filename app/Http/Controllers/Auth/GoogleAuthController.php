@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class GoogleAuthController extends Controller
 {
@@ -35,6 +36,8 @@ class GoogleAuthController extends Controller
 
                 Auth::loginUsingId($newUser->id);
             }
+
+            Alert::success('عملیات موفق!', 'شما با موفقیت وارد شدید!');
 
             // in both case redirect to home
             return redirect('/');
