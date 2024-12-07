@@ -26,10 +26,13 @@ class ProfileController extends Controller
         if ($data["type"] == "sms") {
             if ($request->user()->phone_number != $data['phone']) {
             // generate code
-                $code = ActiveCode::generateCode(auth()->user());
+            $code = ActiveCode::generateCode(auth()->user());
+
+            // save phone number to session using flash
+            $request->session()->flash('phone', $data['phone']);
 
             // TODO send to user
-            
+
                 return redirect(route('twofactor.phone'));
             } else {
                 $request->user()->update([
@@ -46,16 +49,41 @@ class ProfileController extends Controller
             return back();
         }
     }
-    public function getPhoneVerify()
+    public function getPhoneVerify(Request $request)
     {
+        // redirect to twofactor route if phone number isnt saved in session
+        if (! $request->session()->has('phone')) {
+            return redirect(route('twofactor'));
+        }
+
+        // reflash session for another route
+        $request->session()->reflash();
+
         return view('profile.phone_verify');
     }
     public function postPhoneVerify(Request $request)
     {
+        // validate
         $data = $request->validate([
             'token' => ['required', 'string','min:6'],
         ]);
-        return $data['token'];
-    }
 
+        // verify code
+        $status = ActiveCode::verifyCode(auth()->user(), $data['token']);
+
+        // delete code after verification
+        if ($status && $request->session()->has('phone')) {
+            auth()->user()->activecode()->delete();
+            auth()->user()->update([
+                'twofactor_type' => 'sms',
+                'phone_number' => $request->session()->get('phone')
+            ]);
+
+            alert()->success('تایید شد', 'عملیات موفقیت آمیز بود!');
+        } else {
+            alert()->error('تایید نشد', 'مشکلی رخ داده است!');
+        }
+
+        return redirect(route('twofactor'));
+    }
 }

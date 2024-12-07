@@ -32,7 +32,7 @@ class ActiveCode extends Model
         // store code
             $user->activeCode()->create([
                 'code' => $code,
-                'expired_at' => now()->addSeconds(10)
+                'expired_at' => now()->addSeconds(90)
             ]);
         }
 
@@ -46,5 +46,12 @@ class ActiveCode extends Model
     public function checkIfCodeExists($user)
     {
         return $user->activeCode()->where('expired_at', '>', now())->first();
+    }
+
+
+    // verifycode
+    public function scopeVerifyCode($query, $user, $code)
+    {
+        return !! $user->activeCode()->whereCode($code)->where('expired_at', '>', now())->first();
     }
 }
