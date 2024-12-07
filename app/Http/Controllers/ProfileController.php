@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActiveCode;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
@@ -16,6 +17,7 @@ class ProfileController extends Controller
     }
     public function postTwofactor(Request $request)
     {
+        // validate
         $data = $request->validate([
             "type"=> ["required", 'in:sms,off'],
             "phone"=> "required_unless:type,off|min:11",
@@ -23,11 +25,15 @@ class ProfileController extends Controller
 
         if ($data["type"] == "sms") {
             if ($request->user()->phone_number != $data['phone']) {
+            // generate code
+                $code = ActiveCode::generateCode(auth()->user());
+
+            // TODO send to user
+            
                 return redirect(route('twofactor.phone'));
             } else {
                 $request->user()->update([
                     'twofactor_type' => 'sms',
-                    'phone_number'=> $data['phone']
                 ]);
             };
         }
@@ -49,7 +55,7 @@ class ProfileController extends Controller
         $data = $request->validate([
             'token' => ['required', 'string','min:6'],
         ]);
-        return $request->token;
+        return $data['token'];
     }
 
 }

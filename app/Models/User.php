@@ -49,4 +49,8 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
+    // relaitons
+    public function activeCode(){
+        return $this->hasOne(ActiveCode::class);
+    }
 }
