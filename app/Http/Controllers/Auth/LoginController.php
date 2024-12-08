@@ -57,7 +57,7 @@ class LoginController extends Controller
             ]);
 
         // diffrenet rypes of sending code
-            // sendin code after loggin in with sms
+            // sending code after loggin in with sms
             if ($user->twofactor_type == 'sms') {
                 // generate code
                 $code = ActiveCode::generateCode($user);
@@ -67,8 +67,9 @@ class LoginController extends Controller
                 // add session using flash
                 $request->session()->flash('auth.using_sms', true);
 
-                return redirect(route('twofactor.token'));
             }
+
+            return redirect(route('twofactor.token'));
         }
 
         // if twofactor auth is not activated we dont need to authenticate using twofactor

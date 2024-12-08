@@ -20,7 +20,7 @@ class ProfileController extends Controller
         // validate
         $data = $request->validate([
             "type"=> ["required", 'in:sms,off'],
-            "phone"=> "required_unless:type,off|min:11",
+            "phone"=> "required_unless:type,off|min:11|unique:users,phone_number",
         ]);
 
         if ($data["type"] == "sms") {

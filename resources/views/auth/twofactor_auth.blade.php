@@ -9,7 +9,7 @@
                         Two factor Auth
                     </div>
                     <div class="card-body">
-                        <form action="#" method="post">
+                        <form action="{{ route('twofactor.token')}}" method="post">
                             @csrf
                             <div class="form-group">
                                 <label for="token" class="col-form-label">token</label>

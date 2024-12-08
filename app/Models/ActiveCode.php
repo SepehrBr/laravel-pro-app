@@ -26,7 +26,7 @@ class ActiveCode extends Model
         } else {
         // generate code
             do {
-                $code = mt_rand(10000, 999999);
+                $code = mt_rand(100000, 999999);
             } while ($this->checkCodeIsUnique($user, $code));
 
         // store code
