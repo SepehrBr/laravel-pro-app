@@ -41,4 +41,7 @@ return [
         'redirect' => env('GOOGLE_CALLBACK_URL'),
     ],
 
+    'ghasedak' => [
+        'key' => env('GHASEDAK_API_KEY')
+    ]
 ];

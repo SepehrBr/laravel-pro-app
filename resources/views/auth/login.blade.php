@@ -53,23 +53,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="col-md-8 offset-md-4 mt-3">
-                            <a href="{{ route('auth.google') }}" class="btn btn-danger">Login With Google</a>
-                        </div>
                         <div class="form-group col-md-8 offset-md-4 mt-3">
                             <div
                             class="g-recaptcha @error('g-recaptcha-response') is-invalid @enderror"
@@ -82,6 +65,24 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
+                        </div>
+                        <br>
+                        <div class="row mb-0">
+                            <div class="col-md-8 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Login') }}
+                                </button>
+
+                                @if (Route::has('password.request'))
+                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+
+                                        {{ __('Forgot Your Password?') }}
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-md-8 offset-md-4 mt-3">
+                            <a href="{{ route('auth.google') }}" class="btn btn-danger">Login With Google</a>
                         </div>
                     </form>
                 </div>

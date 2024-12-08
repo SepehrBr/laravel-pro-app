@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ActiveCode;
+use App\Notifications\ActiveCodeNotification;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
@@ -31,7 +32,8 @@ class ProfileController extends Controller
                 // save phone number to session using flash
                 $request->session()->flash('phone', $data['phone']);
 
-                // TODO send to user
+                // send code to user
+                $request->user()->notify(new ActiveCodeNotification($code, $data['phone']));
 
                 return redirect(route('twofactor.phone'));
             } else {
