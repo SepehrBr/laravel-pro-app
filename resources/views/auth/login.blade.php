@@ -70,13 +70,18 @@
                         <div class="col-md-8 offset-md-4 mt-3">
                             <a href="{{ route('auth.google') }}" class="btn btn-danger">Login With Google</a>
                         </div>
-                        <div class="col-md-8 offset-md-4 mt-3">
+                        <div class="form-group col-md-8 offset-md-4 mt-3">
                             <div
-                            class="g-recaptcha"
+                            class="g-recaptcha @error('g-recaptcha-response') is-invalid @enderror"
                             data-sitekey="{{ env('GOOGLE_RECAPTHCA_SITE_KEY') }}"
                             h1="fa"
                             >
                             </div>
+                            @error('g-recaptcha-response')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                     </form>
                 </div>

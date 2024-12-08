@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\ActiveCode;
+use App\Rules\Recaptcha;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
@@ -51,7 +52,9 @@ class LoginController extends Controller
         $request->validate([
             $this->username() => 'required|string',
             'password' => 'required|string',
-            'g-recaptcha-response' => 'required'
+            'g-recaptcha-response' => ['required', new Recaptcha]
+        ], [
+            'g-recaptcha-response.required' => 'من ربات نیستم را انتخاب کنید!'
         ]);
     }
 }
