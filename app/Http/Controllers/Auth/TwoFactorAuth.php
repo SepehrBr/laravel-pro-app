@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 
 trait TwoFactorAuth
 {
-    public function loginWithTwoFactorAuth($request, $user)
+    public function loginWithTwoFactorAuth(Request $request, $user)
     {
         // check if twofactor auth is activated or not
         // if activated then ...

@@ -11,12 +11,14 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class GoogleAuthController extends Controller
 {
+    use TwoFactorAuth;
     public function redirect()
     {
         return Socialite::driver('google')->redirect();
     }
-    public function callback()
+    public function callback(Request $request)
     {
+
         try {
             // get google user
             $googleUser = Socialite::driver('google')->user();
@@ -24,26 +26,22 @@ class GoogleAuthController extends Controller
             // check user in sql
             $user = User::whereEmail($googleUser->email)->first();
 
-            // login old user or register new user then login
-            if ($user) {
-                Auth::loginUsingId($user->id);
-            } else {
-                $newUser = User::create([
+            if (!$user) {
+                $user = User::create([
                     'name'=> $googleUser->name,
                     'email'=> $googleUser->email,
                     'password' => bcrypt(\Str::random(15)),
+                    'twofactor_type' => 'off'
                 ]);
-
-                Auth::loginUsingId($newUser->id);
             }
 
-            Alert::success('عملیات موفق!', 'شما با موفقیت وارد شدید!');
+            auth()->loginUsingId($user->id);
 
-            // in both case redirect to home
-            return redirect('/');
+            return $this->loginWithTwoFactorAuth($request, $user);
         } catch (\Throwable $th) {
-            // TODO
-            return 'error';
+            alert()->error('خطا', 'مشکلی رخ داده هست دوباره تلاش کنید');
+
+            return redirect(route('login'));
         }
     }
 }

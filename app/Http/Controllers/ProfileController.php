@@ -20,18 +20,18 @@ class ProfileController extends Controller
         // validate
         $data = $request->validate([
             "type"=> ["required", 'in:sms,off'],
-            "phone"=> "required_unless:type,off|min:11|unique:users,phone_number",
+            "phone"=> "required_unless:type,off|min:11|max:11|unique:users,phone_number",
         ]);
 
         if ($data["type"] == "sms") {
             if ($request->user()->phone_number != $data['phone']) {
-            // generate code
-            $code = ActiveCode::generateCode(auth()->user());
+                // generate code
+                $code = ActiveCode::generateCode(auth()->user());
 
-            // save phone number to session using flash
-            $request->session()->flash('phone', $data['phone']);
+                // save phone number to session using flash
+                $request->session()->flash('phone', $data['phone']);
 
-            // TODO send to user
+                // TODO send to user
 
                 return redirect(route('twofactor.phone'));
             } else {
@@ -40,6 +40,7 @@ class ProfileController extends Controller
                 ]);
             };
         }
+
         if ($data["type"] == "off") {
             $request->user()->update([
                 'twofactor_type' => 'off',
