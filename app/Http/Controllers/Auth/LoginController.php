@@ -46,4 +46,12 @@ class LoginController extends Controller
     {
         return $this->loginWithTwoFactorAuth($request, $user);
     }
+    protected function validateLogin(Request $request)
+    {
+        $request->validate([
+            $this->username() => 'required|string',
+            'password' => 'required|string',
+            'g-recaptcha-response' => 'required'
+        ]);
+    }
 }

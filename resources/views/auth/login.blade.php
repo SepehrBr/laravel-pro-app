@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('script')
+    <script src="https://www.google.com/recaptcha/api.js?hl=fa" async defer></script>
+@endsection
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -64,10 +67,18 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="col-md-8 offset-md-4 mt-3">
+                            <a href="{{ route('auth.google') }}" class="btn btn-danger">Login With Google</a>
+                        </div>
+                        <div class="col-md-8 offset-md-4 mt-3">
+                            <div
+                            class="g-recaptcha"
+                            data-sitekey="{{ env('GOOGLE_RECAPTHCA_SITE_KEY') }}"
+                            h1="fa"
+                            >
+                            </div>
+                        </div>
                     </form>
-                    <div class="col-md-8 offset-md-4 mt-3">
-                        <a href="{{ route('auth.google') }}" class="btn btn-danger">Login With Google</a>
-                    </div>
                 </div>
             </div>
         </div>
