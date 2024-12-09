@@ -78,7 +78,13 @@ class ResetPasswordNotification extends Notification
             ->subject('درخواست بازیابی رمز عبور')
             ->line('این ایمیل با توجه به درخواست شما برای فراموشی رمز عبور برای شما ارسال شده است.')
             ->action(Lang::get('بازیابی رمزعبور'), $url)
-            ->line(Lang::get('لینک بازیابی تا :count دقیقه متعبر میباشد..', ['count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')]))
+            ->line(Lang::get(
+                'لینک تایید ایمیل تا :count دقیقه متعبر میباشد.',
+                [
+                    'count' => config('auth.passwords.'.config('auth.defaults.passwords').'.expire')
+                    ]
+                )
+            )
             ->line('درصورتی که شما این درخواست را نکرده‌اید، این ایمیل را نادیده بگیرید');
     }
 
