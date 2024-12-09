@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Auth;
 
 use App\Models\ActiveCode;
+use App\Notifications\LoginToWebNotification;
 use Illuminate\Http\Request;
 
 trait TwoFactorAuth
@@ -36,7 +37,9 @@ trait TwoFactorAuth
             return redirect(route('twofactor.token'));
         }
 
-        // if twofactor auth is not activated we dont need to authenticate using twofactor
+        // if twofactor auth is not activated then notify with mail for email activation
+        $user->notify(new LoginToWebNotification());
+
         return false;
     }
 }

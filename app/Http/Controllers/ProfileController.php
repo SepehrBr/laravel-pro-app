@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ActiveCode;
 use App\Notifications\ActiveCodeNotification;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
 {
@@ -21,7 +22,7 @@ class ProfileController extends Controller
         // validate
         $data = $request->validate([
             "type"=> ["required", 'in:sms,off'],
-            "phone"=> "required_unless:type,off|min:11|max:11|unique:users,phone_number",
+            "phone"=> ["required_unless:type,off", "min:11", "max:11", Rule::unique('users', 'phone_number')->ignore($request->user()->id)],
         ]);
 
         if ($data["type"] == "sms") {
