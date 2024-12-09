@@ -37,7 +37,9 @@ class LoginToWebNotification extends Notification
         return (new MailMessage)
         ->subject('welcome to Laravel Pro App')
         ->from('sepehrborna@gmail.com')
-        ->view('email.login-to-website');
+        ->markdown('email.login-to-website', [
+            'user' => $notifiable
+        ]);
     }
 
     /**
