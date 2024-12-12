@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Auth;
 
 use App\Models\ActiveCode;
+use App\Notifications\ActiveCodeNotification;
 use App\Notifications\LoginToWebNotification;
 use Illuminate\Http\Request;
 
@@ -27,7 +28,8 @@ trait TwoFactorAuth
                 // generate code
                 $code = ActiveCode::generateCode($user);
 
-                // TODO send sms
+                // send sms
+                $user->notify(new ActiveCodeNotification($code, $user->phone_number));
 
                 // add session using flash
                 $request->session()->flash('auth.using_sms', true);

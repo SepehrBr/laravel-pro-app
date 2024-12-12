@@ -15,7 +15,7 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    
+
 </head>
 <body>
     <div id="app">
@@ -56,6 +56,10 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ url('/in') }}"
+                                       >
+                                        {{ __('Admin Panel') }}
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('profile') }}"
                                        >
                                         {{ __('Profile') }}

