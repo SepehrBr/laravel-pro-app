@@ -14,7 +14,7 @@ class AdminUsersController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(20);
+        $users = User::paginate(2);
         return view('admin.users.all', [
             'users' => $users
         ]);
@@ -89,7 +89,7 @@ class AdminUsersController extends Controller
         }
 
         // verify email
-        if ($request->has('verify')) {
+        if ($request->has('verify_email')) {
             $user->markEmailAsVerified();
         }
 
@@ -110,6 +110,10 @@ class AdminUsersController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->deleteOrFail();
+
+        alert()->success('عملیات موفق', 'کاربر با موفقیت حذف شد');
+
+        return back();
     }
 }

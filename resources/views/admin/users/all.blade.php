@@ -42,6 +42,7 @@
                     <th>نام کاربر</th>
                     <th>ایمیل کاربر</th>
                     <th>وضعیت ایمیل</th>
+                    <th>سمت</th>
                     <th>تاریخ عضویت</th>
                     <th>اقدامات</th>
                 </tr>
@@ -54,17 +55,36 @@
                         <td>
                             <span class="badge {{ is_null($user->email_verified_at) ? 'badge-danger' : 'badge-success' }} badge-success">{{ is_null($user->email_verified_at) ? 'تایید نشده' : 'تایید شده'  }}</span>
                         </td>
-                        <td>{{ \Carbon\Carbon::create($user->created_at)->toDayDateTimeString() }}</td>
                         <td>
-                            <a href="{{ route('admin.users.destroy', [ 'user' => $user->id ])}}" class="btn btn-sm btn-danger">حذف</a>
-                            <a href="{{ route('admin.users.edit', [ 'user' => $user->id ])}}" class="btn btn-sm btn-warning">ویرایش</a>
+                            @if ($user->is_admin || $user->is_staff)
+                                @if ($user->is_admin)
+                                    {{ $user->is_admin ? 'ادمین ' : '' }}
+                                @else
+                                    {{ $user->is_staff ? 'کارمند ' : '' }}
+                                @endif
+                            @else
+                                کاربر
+                            @endif
+                        </td>
+                        <td>{{ \Carbon\Carbon::create($user->created_at)->toDayDateTimeString() }}</td>
+                        <td class="d-flex">
+                            <form action="{{ route('admin.users.destroy', [ 'user' => $user->id ])}}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" href="" class="btn btn-sm btn-danger">حذف</button>
+                            </form>
+                            <a href="{{ route('admin.users.edit', [ 'user' => $user->id ])}}" class="btn btn-sm btn-warning mr-2">ویرایش</a>
                         </td>
                     </tr>
                 @endforeach
-              </tbody></table>
-            </div>
+              </tbody>
+            </table>
+        </div>
             <!-- /.card-body -->
-          </div>
+        </div>
+        <div class="card-footer">
+            {{ $users->render() }}
+        </div>
           <!-- /.card -->
         </div>
       </div>
