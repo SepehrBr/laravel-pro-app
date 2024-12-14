@@ -23,14 +23,18 @@
 
               <div class="card-tools d-flex">
                 <div class="input-group input-group-sm" style="width: 150px;">
-                  <input type="text" name="table_search" class="form-control float-right" placeholder="جستجو">
+                  <form action="" class="d-flex">
+                    @csrf
+                    <input type="text" name="search" value="{{ request('search') }}" class="form-control float-right" placeholder="جستجو"   >
 
                   <div class="input-group-append">
                     <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                   </div>
+                  </form>
                 </div>
                 <div class="btn-group-sm mr-2">
                     <a href="{{ route('admin.users.create') }}" class="btn btn-info">ایجاد کاربر جدید</a>
+                    <a href="{{ request()->fullUrlWithQuery([ 'admin' => 1 ]) }}" class="btn btn-warning">کاربران مدیر</a>
                 </div>
               </div>
             </div>

@@ -14,7 +14,21 @@ class AdminUsersController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(2);
+        $users = User::query();
+
+        // search method
+        if (request('search')) {
+            $keyword = request('search');
+            $users->where('email', 'like', "%$keyword%")
+                  ->orWhere('name', 'like', "%$keyword%")
+                  ->orWhere('id', $keyword);
+        }
+
+        if (\request('admin')) {
+            $users->where('is_staff', 1)->orWhere('is_admin', 1);
+        }
+
+        $users = $users->latest()->paginate(10);
         return view('admin.users.all', [
             'users' => $users
         ]);
