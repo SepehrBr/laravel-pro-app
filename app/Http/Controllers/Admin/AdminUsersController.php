@@ -59,33 +59,56 @@ class AdminUsersController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        return view('admin.users.edit', [
+            'user' => $user
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        // validate data first
+        $validated_data = $request->validate([
+            'name' => ['required', 'string', 'min:1', 'max:100'],
+            'email' => ['required', 'string', 'min:1', 'max:255', Rule::unique('users', 'email')->ignore($user->id), 'email'],
+        ]);
+
+        // update password if new password was added
+        if (! is_null($request->password)) {
+            $request->validate([
+                'password' => ['required', 'string', 'min:5', 'confirmed']
+            ]);
+
+            $validated_data['password'] = $request->password;
+        }
+
+        // verify email
+        if ($request->has('verify')) {
+            $user->markEmailAsVerified();
+        }
+
+        try {
+            $user->update($validated_data);
+
+            alert()->success('کاربر با موفقیت ویرایش شد');
+
+            return redirect(route('admin.users.index'));
+        } catch (\Exception $e) {
+            alert()->error('در فرایند ویرایش کاربر خطایی رخ داده است.');
+            throw $e;
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
         //
     }

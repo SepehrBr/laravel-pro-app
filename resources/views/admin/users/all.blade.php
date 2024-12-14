@@ -56,8 +56,8 @@
                         </td>
                         <td>{{ \Carbon\Carbon::create($user->created_at)->toDayDateTimeString() }}</td>
                         <td>
-                            <button class="btn btn-sm btn-danger">حذف</button>
-                            <button class="btn btn-sm btn-warning">ویرایش</button>
+                            <a href="{{ route('admin.users.destroy', [ 'user' => $user->id ])}}" class="btn btn-sm btn-danger">حذف</a>
+                            <a href="{{ route('admin.users.edit', [ 'user' => $user->id ])}}" class="btn btn-sm btn-warning">ویرایش</a>
                         </td>
                     </tr>
                 @endforeach
