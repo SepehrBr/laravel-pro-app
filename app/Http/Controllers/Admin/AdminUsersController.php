@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class AdminUsersController extends Controller
 {
@@ -24,7 +25,7 @@ class AdminUsersController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.users.create');
     }
 
     /**
@@ -32,7 +33,29 @@ class AdminUsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validate data first
+        $validated_data = $request->validate([
+            'name' => ['required', 'string', 'min:1', 'max:100'],
+            'email' => ['required', 'string', 'min:1', 'max:255', Rule::unique('users', 'email'), 'email'],
+            'password' => ['required', 'string', 'min:5', 'confirmed']
+        ]);
+
+        try {
+            // create user
+            $user = User::create($validated_data);
+
+            // verify email
+            if ($request->has('verify_email')) {
+                $user->markEmailAsVerified();
+            }
+
+            alert()->success('کاربر با موفقیت ایجاد شد');
+
+            return redirect(route('admin.users.index'));
+        } catch (\Exception $e) {
+            alert()->error('در فرایند ایجاد کاربر خطایی رخ داده است.');
+            throw new \Exception($e);
+        }
     }
 
     /**
