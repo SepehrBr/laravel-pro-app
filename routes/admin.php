@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminUsersController;
 use App\Http\Middleware\AdminMiddleware;
 
 Route::get('/', function () {
@@ -8,3 +9,7 @@ Route::get('/', function () {
         'user' => $user
     ]);
 })->name('index');
+
+
+// users
+Route::resource('users', AdminUsersController::class);

@@ -42,11 +42,12 @@
   <!-- Main Sidebar Container -->
     @include('admin.layouts.sidebar')
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+
       @yield('content')
-  </div>
-  
+    </div>
+
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <strong>CopyLeft &copy; 2024 <a href="http://github.com/hesammousavi/">سپهر برنا</a>.</strong>
