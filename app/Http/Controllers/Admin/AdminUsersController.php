@@ -24,7 +24,7 @@ class AdminUsersController extends Controller
                   ->orWhere('id', $keyword);
         }
 
-        if (\request('admin')) {
+        if (request('admin')) {
             $users->where('is_staff', 1)->orWhere('is_admin', 1);
         }
 
