@@ -77,7 +77,9 @@
                                 @method('DELETE')
                                 <button type="submit" href="" class="btn btn-sm btn-danger">حذف</button>
                             </form>
-                            <a href="{{ route('admin.users.edit', [ 'user' => $user->id ])}}" class="btn btn-sm btn-warning mr-2">ویرایش</a>
+                            @can('edit-user', $user)
+                                <a href="{{ route('admin.users.edit', [ 'user' => $user->id ])}}" class="btn btn-sm btn-warning mr-2">ویرایش</a>
+                            @endcan
                         </td>
                     </tr>
                 @endforeach

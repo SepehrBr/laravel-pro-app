@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminUsersController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Models\User;
 
 Route::get('/', function () {
     $user = auth()->user();
