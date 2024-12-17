@@ -11,7 +11,7 @@ use Illuminate\Validation\Rule;
 class AdminUsersController extends Controller
 {
     public function __construct() {
-        $this->middleware('can:edit-user,user')->only('edit');
+        $this->middleware('can:update,user')->only('edit');
     }
     /**
      * Display a listing of the resource.
@@ -81,13 +81,9 @@ class AdminUsersController extends Controller
      */
     public function edit(User $user)
     {
-        if ($this->authorize('edit-user', $user)) {
-            return view('admin.users.edit', [
-                'user' => $user
-            ]);
-        }
-
-        abort(403);
+        return view('admin.users.edit', [
+            'user' => $user
+        ]);
     }
 
     /**

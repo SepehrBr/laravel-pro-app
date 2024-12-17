@@ -72,12 +72,14 @@
                         </td>
                         <td>{{ \Carbon\Carbon::create($user->created_at)->toDayDateTimeString() }}</td>
                         <td class="d-flex">
-                            <form action="{{ route('admin.users.destroy', [ 'user' => $user->id ])}}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" href="" class="btn btn-sm btn-danger">حذف</button>
-                            </form>
-                            @can('edit-user', $user)
+                            @can('delete', $user)
+                                <form action="{{ route('admin.users.destroy', [ 'user' => $user->id ])}}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" href="" class="btn btn-sm btn-danger">حذف</button>
+                                </form>
+                            @endcan
+                            @can('update', $user)
                                 <a href="{{ route('admin.users.edit', [ 'user' => $user->id ])}}" class="btn btn-sm btn-warning mr-2">ویرایش</a>
                             @endcan
                         </td>
