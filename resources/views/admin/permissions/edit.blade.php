@@ -72,3 +72,9 @@
         </div>
       </div>
 @endsection
+@section('script')
+    <script>
+        $('#roles').select2({})
+        $('#permissions').select2({})
+    </script>
+@endsection

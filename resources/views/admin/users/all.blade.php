@@ -82,6 +82,9 @@
                             @can('update', $user)
                                 <a href="{{ route('admin.users.edit', [ 'user' => $user->id ])}}" class="btn btn-sm btn-warning mr-2">ویرایش</a>
                             @endcan
+                            @if (Auth::user()->is_admin)
+                                <a href="{{ route('admin.users.permissions.create', [ 'user' => $user->id ])}}" class="btn btn-sm btn-primary mr-2">دسترسی ها</a>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

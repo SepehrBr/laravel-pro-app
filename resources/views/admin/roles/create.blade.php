@@ -63,7 +63,7 @@
                         <div class="col-sm-10">
                           <select class="form-control" name="permissions[]" id="permissions" multiple >
                             @foreach (App\Models\Permission::all() as $permission)
-                                <option value="{{ $permission->id }}" {{ in_array($permission->id, $role->permissions->pluck('id')->toArray() ? 'selected' : '')}}>{{ $permission->name }} - {{ $permission->label }}</option>
+                                <option value="{{ $permission->id }}">{{ $permission->name }} - {{ $permission->label }}</option>
                             @endforeach
                           </select>
                         </div>
@@ -90,4 +90,10 @@
           <!-- /.card -->
         </div>
       </div>
+@endsection
+@section('script')
+    <script>
+        $('#roles').select2({})
+        $('#permissions').select2({})
+    </script>
 @endsection
