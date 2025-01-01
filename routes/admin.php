@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminUsersController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Models\Permission;
 use App\Models\User;
@@ -21,4 +22,4 @@ Route::resource('users', AdminUsersController::class);
 Route::resource('permissions', PermissionController::class);
 
 // role
-// Route::resource('roles', RuleController::class);
+Route::resource('roles', RoleController::class);
