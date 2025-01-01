@@ -42,9 +42,32 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="./index.html" class="nav-link {{ Route::currentRouteName() == 'admin.index' ? 'active' : '' }}">
+                  <a href="{{ route('admin.users.create')}}" class="nav-link {{ Route::currentRouteName() == 'admin.users.create' ? 'active' : ''}}">
                     <i class="fa fa-circle-o nav-icon"></i>
-                    <p>اجازه دسترسی</p>
+                    <p>ایجاد کاربر جدید</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item has-treeview menu-open">
+              <a href="#" class="nav-link {{ in_array(Route::currentRouteName(), ['admin.permissions.index', 'admin.permissions.create', 'admin.permissions.edit', 'admin.roles.index', 'admin.roles.create', 'admin.roles.edit' ]) ? 'active' : ''}}">
+                <i class="nav-icon fa fa-users"></i>
+                <p>
+                  مدیریت بخش دسترسی
+                  <i class="right fa fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{ route('admin.permissions.index')}}" class="nav-link {{ in_array(Route::currentRouteName(), ['admin.permissions.index', 'admin.permissions.create', 'admin.permissions.edit']) ? 'active' : ''}}">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>دسترسی ها</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ route('admin.roles.index') }}" class="nav-link {{ in_array(Route::currentRouteName(), ['admin.roles.index', 'admin.roles.create', 'admin.roles.edit' ]) ? 'active' : '' }}">
+                    <i class="fa fa-circle-o nav-icon"></i>
+                    <p>مقام ها</p>
                   </a>
                 </li>
               </ul>
