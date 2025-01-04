@@ -31,7 +31,9 @@
                   </form>
                 </div>
                 <div class="btn-group-sm mr-2">
-                    <a href="{{ route('admin.permissions.create') }}" class="btn btn-info">ایجاد دسترسی جدید</a>
+                    @can('create-permission')
+                        <a href="{{ route('admin.permissions.create') }}" class="btn btn-info">ایجاد دسترسی جدید</a>
+                    @endcan
                 </div>
               </div>
             </div>
@@ -53,16 +55,16 @@
                         <td>{{ strlen($permission->label) > 10 ? substr($permission->label, 0, 30) . " ..." : $permission->label }}</td>
                         <td>{{ \Carbon\Carbon::create($permission->created_at)->toDayDateTimeString() }}</td>
                         <td class="d-flex">
-                            {{-- @can('delete', $permission) --}}
+                            @can('delete-permission')
                                 <form action="{{ route('admin.permissions.destroy', [ 'permission' => $permission->id ])}}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" href="" class="btn btn-sm btn-danger">حذف</button>
                                 </form>
-                            {{-- @endcan --}}
-                            {{-- @can('edit', $permission) --}}
+                            @endcan
+                            @can('edit-permission')
                                 <a href="{{ route('admin.permissions.edit', [ 'permission' => $permission->id ])}}" class="btn btn-sm btn-warning mr-2">ویرایش</a>
-                            {{-- @endcan --}}
+                            @endcan
                         </td>
                     </tr>
                 @endforeach
