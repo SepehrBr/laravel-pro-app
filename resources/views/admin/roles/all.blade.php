@@ -41,7 +41,6 @@
                 <tbody><tr>
                     <th>ID مقام</th>
                     <th>نام مقام</th>
-                    <th>دسترسی های مجاز مقام</th>
                     <th>توضیحات</th>
                     <th>تاریخ ایجاد</th>
                     <th>اقدامات</th>
@@ -51,7 +50,6 @@
                     <tr>
                         <td>{{ $role->id }}</td>
                         <td>{{ $role->name }}</td>
-                        <td>{{ $role->permissions }}</td>
                         <td>{{ strlen($role->label) > 10 ? substr($role->label, 0, 30) . " ..." : $role->label }}</td>
                         <td>{{ \Carbon\Carbon::create($role->created_at)->toDayDateTimeString() }}</td>
                         <td class="d-flex">

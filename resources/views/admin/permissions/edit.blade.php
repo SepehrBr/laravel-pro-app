@@ -57,6 +57,24 @@
                         </div>
                       @enderror
 
+                      <div class="form-group">
+                        <label for="permissions" class="col-sm-2 control-label">مقام ها</label>
+                        <div class="col-sm-10">
+                          <select class="form-control" name="roles[]" id="roles" multiple >
+                            @foreach (App\Models\Role::all() as $role)
+                                <option value="{{ $role->id }}" {{ in_array($role->id, $role->permissions->pluck('id')->toArray()) ? 'selected' : ''}}>{{ $role->name }}</option>
+                            @endforeach
+                          </select>
+                        </div>
+                      </div>
+                      @error('roles')
+                        <div class="error-message text-danger fw-bold">
+                            <strong>
+                                {{ $message }}
+                            </strong>
+                        </div>
+                      @enderror
+
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
@@ -75,6 +93,5 @@
 @section('script')
     <script>
         $('#roles').select2({})
-        $('#permissions').select2({})
     </script>
 @endsection

@@ -91,7 +91,7 @@ class PermissionController extends Controller
      */
     public function destroy(Permission $permission)
     {
-        $permission->deleteOrFail();
+        $permission->delete();
 
         return view('admin.permissions.all');
     }

@@ -33,8 +33,12 @@
                   </form>
                 </div>
                 <div class="btn-group-sm mr-2">
-                    <a href="{{ route('admin.users.create') }}" class="btn btn-info">ایجاد کاربر جدید</a>
+                    @can('create-user')
+                        <a href="{{ route('admin.users.create') }}" class="btn btn-info">ایجاد کاربر جدید</a>
+                    @endcan
+                    @can('show-staff-users')
                     <a href="{{ request()->fullUrlWithQuery([ 'admin' => 1 ]) }}" class="btn btn-warning">کاربران مدیر</a>
+                    @endcan
                 </div>
               </div>
             </div>
@@ -72,18 +76,20 @@
                         </td>
                         <td>{{ \Carbon\Carbon::create($user->created_at)->toDayDateTimeString() }}</td>
                         <td class="d-flex">
-                            @can('delete', $user)
+                            @can('delete-user', $user)
                                 <form action="{{ route('admin.users.destroy', [ 'user' => $user->id ])}}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" href="" class="btn btn-sm btn-danger">حذف</button>
                                 </form>
                             @endcan
-                            @can('update', $user)
+                            @can('edit-user', $user)
                                 <a href="{{ route('admin.users.edit', [ 'user' => $user->id ])}}" class="btn btn-sm btn-warning mr-2">ویرایش</a>
                             @endcan
                             @if (Auth::user()->is_admin)
+                                @can('staff-user-permissions')
                                 <a href="{{ route('admin.users.permissions.create', [ 'user' => $user->id ])}}" class="btn btn-sm btn-primary mr-2">دسترسی ها</a>
+                                @endcan
                             @endif
                         </td>
                     </tr>

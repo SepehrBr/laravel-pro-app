@@ -23,7 +23,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // acl setup
+        Gate::before(function ($user) {
+            if ($user->is_admin == 1) return true;
+        });
 
         // permissions gate
         foreach (Permission::all() as $permission) {

@@ -31,7 +31,7 @@
                     <div class="card-body">
 
                       <div class="form-group">
-                        <label for="name" class="col-sm-2 control-label">نام کاربر</label>
+                        <label for="name" class="col-sm-2 control-label">نام دسترسی</label>
                         <div class="col-sm-10">
                           <input value="{{old('name')}}" type="text" name="name" class="form-control" id="name" placeholder="نام دسترسی جدید را وارد کنید">
                         </div>
@@ -58,6 +58,24 @@
                         </div>
                       @enderror
 
+                      <div class="form-group">
+                        <label for="permissions" class="col-sm-2 control-label">مقام ها</label>
+                        <div class="col-sm-10">
+                          <select class="form-control" name="roles[]" id="roles" multiple >
+                            @foreach (App\Models\Role::all() as $role)
+                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                            @endforeach
+                          </select>
+                        </div>
+                      </div>
+                      @error('roles')
+                        <div class="error-message text-danger fw-bold">
+                            <strong>
+                                {{ $message }}
+                            </strong>
+                        </div>
+                      @enderror
+
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
@@ -76,6 +94,5 @@
 @section('script')
     <script>
         $('#roles').select2({})
-        $('#permissions').select2({})
     </script>
 @endsection

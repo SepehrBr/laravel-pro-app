@@ -26,29 +26,31 @@
                  with font-awesome or any other icon font library -->
             <li class="nav-item"><a href="{{ route('admin.index') }}" class="nav-link {{ Route::currentRouteName() == 'admin.index' ? 'active' : ''}}">
                 <i class="nav-icon fa fa-dashboard"></i>پنل مدیریت</a></li>
+            @can('show-users')
             <li class="nav-item has-treeview menu-open">
-              <a href="#" class="nav-link {{ in_array(Route::currentRouteName(), ['admin.users.index', 'admin.users.create', 'admin.users.edit']) ? 'active' : ''}}">
-                <i class="nav-icon fa fa-users"></i>
-                <p>
-                  کاربران
-                  <i class="right fa fa-angle-left"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="{{ route('admin.users.index')}}" class="nav-link {{ Route::currentRouteName() == 'admin.users.index' ? 'active' : ''}}">
-                    <i class="fa fa-circle-o nav-icon"></i>
-                    <p>لیست کاربران</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{ route('admin.users.create')}}" class="nav-link {{ Route::currentRouteName() == 'admin.users.create' ? 'active' : ''}}">
-                    <i class="fa fa-circle-o nav-icon"></i>
-                    <p>ایجاد کاربر جدید</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
+                <a href="#" class="nav-link {{ in_array(Route::currentRouteName(), ['admin.users.index', 'admin.users.create', 'admin.users.edit']) ? 'active' : ''}}">
+                  <i class="nav-icon fa fa-users"></i>
+                  <p>
+                    کاربران
+                    <i class="right fa fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ route('admin.users.index')}}" class="nav-link {{ Route::currentRouteName() == 'admin.users.index' ? 'active' : ''}}">
+                      <i class="fa fa-circle-o nav-icon"></i>
+                      <p>لیست کاربران</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{ route('admin.users.create')}}" class="nav-link {{ Route::currentRouteName() == 'admin.users.create' ? 'active' : ''}}">
+                      <i class="fa fa-circle-o nav-icon"></i>
+                      <p>ایجاد کاربر جدید</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            @endcan
             <li class="nav-item has-treeview menu-open">
               <a href="#" class="nav-link {{ in_array(Route::currentRouteName(), ['admin.permissions.index', 'admin.permissions.create', 'admin.permissions.edit', 'admin.roles.index', 'admin.roles.create', 'admin.roles.edit' ]) ? 'active' : ''}}">
                 <i class="nav-icon fa fa-users"></i>
